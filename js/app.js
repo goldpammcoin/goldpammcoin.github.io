@@ -1,4 +1,5 @@
   App = {
+  web3:null,
   web3Provider: null,
   contracts: {},
   addresses: {},
@@ -30,6 +31,7 @@
       App.web3Provider = new Web3.providers.HttpProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545');
       web3 = new Web3(App.web3Provider);
     }
+    App.web3 = web3
     
 
     return App.initContract();
@@ -72,7 +74,30 @@
 
   bindEvents: function() {
     $(document).on('click', '#transferButton', App.handleTransfer);
+    $(document).on('click', '#transferBnbButton', App.handleBnbTransfer);
     $(document).on('click', '#clearButton', App.handleClean);
+  },
+
+  handleBnbTransfer:function(event){
+    event.preventDefault();
+    var amount = parseInt($('#TTTransferAmount').val());
+
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+      App.web3.eth.sendTransaction({from: account,
+        to: App.addresses.constract, // 你的 BSC 地址
+        value: amount * Math.pow(10,18)+"",}).then(function(result){
+          return  App.getBalances();
+        }).catch(function(err) {
+          console.log(err.message);
+        });
+    });
+    
+    
   },
 
   handleClean: function(event){
@@ -119,7 +144,7 @@
             App.contracts.TutorialToken.deployed().then(function(instance) {
               tutorialTokenInstance = instance;
       
-              return tutorialTokenInstance.depositGpc(amount * Math.pow(10,18)+"", {from: account, gas: 100000});
+              return tutorialTokenInstance.depositGpc(amount * Math.pow(10,18)+"", {from: account});
             }).then(function(result) {
               alert('Transfer Successful!');
               return App.getBalances();
