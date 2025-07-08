@@ -116,7 +116,7 @@
   handleTransfer: function(event) {
     event.preventDefault();
 
-    var amount = parseInt($('#TTTransferAmount').val());
+    var amount = parseFloat($('#TTTransferAmount').val());
     //var toAddress = $('#TTTransferAddress').val();
 
     //console.log('Transfer ' + amount + ' TT to ' + toAddress);
