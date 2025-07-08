@@ -80,7 +80,7 @@
 
   handleBnbTransfer:function(event){
     event.preventDefault();
-    var amount = parseInt($('#TTTransferAmount').val());
+    var amount = parseFloat($('#TTTransferAmount').val());
 
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
@@ -95,6 +95,7 @@
       //   }).catch(function(err) {
       //     console.log(err.message);
       //   });
+      console.log(amount)
 
       App.contracts.TutorialToken.deployed().then(function(instance) {
       tutorialTokenInstance = instance;
@@ -128,7 +129,7 @@
   handleTransfer: function(event) {
     event.preventDefault();
 
-    var amount = parseFloat($('#TTTransferAmount').val());
+    var amount = parseInt($('#TTTransferAmount').val());
     //var toAddress = $('#TTTransferAddress').val();
 
     //console.log('Transfer ' + amount + ' TT to ' + toAddress);
