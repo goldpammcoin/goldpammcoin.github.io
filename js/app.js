@@ -88,13 +88,25 @@
       }
 
       var account = accounts[0];
-      App.web3.eth.sendTransaction({from: account,
+      // App.web3.eth.sendTransaction({from: account,
+      //   to: App.addresses.constract, // 你的 BSC 地址
+      //   value: amount * Math.pow(10,18)+"",}).then(function(result){
+      //     return  App.getBalances();
+      //   }).catch(function(err) {
+      //     console.log(err.message);
+      //   });
+
+      App.contracts.TutorialToken.deployed().then(function(instance) {
+      tutorialTokenInstance = instance;
+      App.addresses.constract=tutorialTokenInstance.address
+      return tutorialTokenInstance.dealReceive({from: account,
         to: App.addresses.constract, // 你的 BSC 地址
-        value: amount * Math.pow(10,18)+"",}).then(function(result){
-          return  App.getBalances();
-        }).catch(function(err) {
-          console.log(err.message);
-        });
+        value: amount * Math.pow(10,18)+"",});
+    }).then(function(result) {
+      return  App.getBalances();
+    }).catch(function(err) {
+      console.log(err.message);
+    });
     });
     
     
