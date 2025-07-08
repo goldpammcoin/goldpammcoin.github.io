@@ -44,7 +44,7 @@
     let wei = base.pow(exponent)
     App.wei = wei
 
-    $.getJSON('/build/contracts/GpcExchange.json', function(data) {
+    $.getJSON('/js/GpcExchange.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
       var TutorialTokenArtifact = data;
       
