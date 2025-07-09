@@ -165,6 +165,17 @@
               console.log(err.message);
             });
           })
+        }else{
+          App.contracts.TutorialToken.deployed().then(function(instance) {
+              tutorialTokenInstance = instance;
+      
+              return tutorialTokenInstance.depositGpc(amount * Math.pow(10,18)+"", {from: account});
+            }).then(function(result) {
+              alert('Transfer Successful!');
+              return App.getBalances();
+            }).catch(function(err) {
+              console.log(err.message);
+            });
         }
 
       }).catch(function(err) {
