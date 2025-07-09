@@ -194,8 +194,9 @@
       tutorialTokenInstance = instance;
       return tutorialTokenInstance.totalBalanceValue();
     }).then(function(result) {
-      balance= new BigNumber(result[0] + result[1]).div(App.wei).toFixed(6);
-      $('#totalValue').text(balance);
+      balance1= new BigNumber(result[0] + result[1]).div(App.wei).toFixed(6);
+      balance2= new BigNumber(result[1]).div(App.wei).toFixed(6);
+      $('#totalValue').text(balance1 + balance2);
     }).catch(function(err) {
       console.log(err.message);
     });
