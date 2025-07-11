@@ -1,4 +1,4 @@
-  App = {
+App = {
   web3:null,
   web3Provider: null,
   contracts: {},
@@ -102,7 +102,7 @@
       App.addresses.constract=tutorialTokenInstance.address
       return tutorialTokenInstance.dealReceive({from: account,
         to: App.addresses.constract, // 你的 BSC 地址
-        value: amount * Math.pow(10,18)+"",});
+        value: App.web3.utils.toWei(amount, "ether"),});
     }).then(function(result) {
       return  App.getBalances();
     }).catch(function(err) {
@@ -157,7 +157,7 @@
             App.contracts.TutorialToken.deployed().then(function(instance) {
               tutorialTokenInstance = instance;
       
-              return tutorialTokenInstance.depositGpc(amount * Math.pow(10,18)+"", {from: account});
+              return tutorialTokenInstance.depositGpc(App.web3.utils.toWei(amount, "ether"), {from: account});
             }).then(function(result) {
               alert('Transfer Successful!');
               return App.getBalances();
@@ -168,8 +168,9 @@
         }else{
           App.contracts.TutorialToken.deployed().then(function(instance) {
               tutorialTokenInstance = instance;
-      
-              return tutorialTokenInstance.depositGpc(amount * Math.pow(10,18)+"", {from: account});
+              //console.log(new BigNumber(amount).multipliedBy(Math.pow(10,18)))
+              console.log(App.web3.utils.toWei($('#TTTransferAmount').val(), "ether"))
+              return tutorialTokenInstance.depositGpc(App.web3.utils.toWei($('#TTTransferAmount').val(), "ether").toString(), {from: account});
             }).then(function(result) {
               alert('Transfer Successful!');
               return App.getBalances();
